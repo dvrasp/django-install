@@ -50,8 +50,8 @@ def _add_to_installed_apps(name):
         print("\n".join(difflib.unified_diff(lines, new_lines)))
 
 class Command(BaseCommand):
-    ## args = '<poll_id poll_id ...>'
-    ## help = 'Closes the specified poll for voting'
+    args = '<package_name package_name...>'
+    help = 'Try to install the specified package via pip and register it in the settings.py and requirements.txt'
 
     def handle(self, *args, **options):
         for name in args:
