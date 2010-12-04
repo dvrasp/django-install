@@ -1,0 +1,6 @@
+Basic use case :
+
+$ cp -r ~/django-install/install .
+$ vi settings.py # add 'install', to INSTALLED apps
+$ python manage.py install django-extensions
+
