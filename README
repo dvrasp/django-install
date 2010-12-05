@@ -2,24 +2,26 @@ Basic use case :
 
 $ cp -r ~/django-install/install .
 $ vi settings.py # add 'install', to INSTALLED apps
-$ python manage.py install django-extensions
+$ python manage.py install django_extensions sorl-thumbnail django-celery
 
 (...) pip install output (...)
 
---- requirements.txt 2010-12-04 18:19:01
-+++ requirements.txt 2010-12-04 18:19:10.165371
-@@ -1,2 +1,3 @@
- sorl-thumbnail
- django-celery
+--- requirements.txt 
++++ requirements.txt 2010-12-04 18:31:10.238492
+@@ -1,0 +1,3 @@
 +django-extensions
++sorl-thumbnail
++django-celery
 
---- settings.py 2010-12-04 18:18:55
-+++ settings.py 2010-12-04 18:19:10.180503
-@@ -95,5 +95,6 @@
+--- settings.py 2010-12-04 18:24:47
++++ settings.py 2010-12-04 18:31:10.247773
+@@ -93,5 +93,8 @@
+     
+     'AddressBook',
      'install',
-     'sorl.thumbnail',
-     'djcelery',
 +    'django_extensions',
++    'sorl.thumbnail',
++    'djcelery',
  )
 
 $ python manage.py install django-extensions | patch

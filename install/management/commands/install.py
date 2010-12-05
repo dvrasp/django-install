@@ -8,29 +8,44 @@ import logging
 
 
 def _print_diff(filename, lines, new_lines):
+    try:
+       fromfiledate = datetime.datetime.fromtimestamp(os.stat(filename).st_mtime)
+    except OSError:
+       fromfiledate = ''
     print("\n".join(difflib.unified_diff(lines, new_lines,
                                          fromfile=filename, tofile=filename,
-                                         fromfiledate=datetime.datetime.fromtimestamp(os.stat(filename).st_mtime),
+                                         fromfiledate=fromfiledate,
                                          tofiledate=datetime.datetime.now(),
                                          lineterm=''))
           +"\n")
 
-def _add_to_requirements_txt(name):
+def _add_to_requirements_txt(names):
     def _check(name):
         try:
             return name in open("requirements.txt").read()
         except:
             pass
-    if _check(name):
-        logging.info("Found {0} in requirements.txt".format(name))
-    else:
-        logging.info("Adding {0} to requirements.txt".format(name))
-        requirements = open("requirements.txt").read().split("\n")
+
+    new_names = []
+
+    for name in names:
+        if _check(name):
+            logging.info("Found {0} in requirements.txt".format(name))
+        else:
+            logging.info("Adding {0} to requirements.txt".format(name))
+            new_names.append(name)
+
+    if new_names:
+        if os.path.exists("requirements.txt"):
+            requirements = open("requirements.txt").read().split("\n")
+        else:
+            requirements = ["\n"]
+
         if not requirements[-1].strip(): ## replace trailing newline
             requirements = requirements[:-1]
 
-        new_requirements = requirements + [name]
-        
+        new_requirements = requirements + new_names
+
         _print_diff("requirements.txt", requirements, new_requirements)
         #open("requirements.txt", "a").write("{0}\n".format(name))
     
@@ -80,6 +95,8 @@ class Command(BaseCommand):
     ## help = 'Closes the specified poll for voting'
 
     def handle(self, *args, **options):
+        new_app_names = []
+        new_package_names = []
         for name in args:
             req = InstallRequirement.from_line(name)
             if not req.check_if_exists():
@@ -89,8 +106,10 @@ class Command(BaseCommand):
                 req = InstallRequirement.from_line(name)
                 if not req.check_if_exists():
                     raise Exception("Installed package not found")
+
             distribution = req.satisfied_by
-            _add_to_requirements_txt(distribution.project_name)
+            new_package_names.append(distribution.project_name)
+            
             def _get_app_names(name):
                 ## try real package names
                 packages = os.listdir(distribution.location)
@@ -98,5 +117,9 @@ class Command(BaseCommand):
                 if candidates:
                     return [candidates[0]]
                 return HOOKS['APPNAMES'].get(name, name)
-            _add_to_installed_apps(_get_app_names(distribution.project_name))
+            
+            new_app_names += _get_app_names(distribution.project_name)
+            
+        _add_to_requirements_txt(new_package_names)
+        _add_to_installed_apps(new_app_names)
             
