@@ -4,7 +4,7 @@ setup(
     version = "0.1",
     packages = find_packages(exclude=["test_project"]),
     install_requires = ['pip'],
-    
+    scripts = ['scripts/django-install.py'],    
     
     author = "dvrasp",
     author_email = "dvrasp@gmail.com",

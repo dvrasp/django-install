@@ -1,31 +1,59 @@
-Basic use case :
+Typical use case :
 
-$ python setup.py install
-$ cd ~/project
-$ vi settings.py # add 'django_install', to INSTALLED apps
-$ python manage.py install django_extensions sorl-thumbnail django-celery
+$ python setup.py install # or whatever
+$ cd ~/some-django-project/
+$ django-install.py django_extensions sorl-thumbnail django-celery django-debug-toolbar
 
 (...) pip install output (...)
 
 --- requirements.txt 
-+++ requirements.txt 2010-12-04 18:31:10.238492
-@@ -1,0 +1,3 @@
++++ requirements.txt 2010-12-05 05:21:35.595283
+@@ -1,0 +1,4 @@
 +django-extensions
 +sorl-thumbnail
 +django-celery
++django-debug-toolbar
 
---- settings.py 2010-12-04 18:24:47
-+++ settings.py 2010-12-04 18:31:10.247773
-@@ -93,5 +93,8 @@
-     
-     'AddressBook',
-     'install',
+--- a/settings.py 2010-12-05 05:19:10
++++ b/settings.py 2010-12-05 05:21:35.602713
+@@ -83,6 +83,10 @@
+     # Don't forget to use absolute paths, not relative paths.
+ )
+ 
++INTERNAL_IPS = [
++            '127.0.0.1',
++        ]
++
+ INSTALLED_APPS = (
+     'django.contrib.auth',
+     'django.contrib.contenttypes',
+
+--- a/settings.py 2010-12-04 22:19:10
++++ b/settings.py 2010-12-04 22:21:35.618013
+@@ -73,6 +73,7 @@
+     'django.middleware.csrf.CsrfViewMiddleware',
+     'django.contrib.auth.middleware.AuthenticationMiddleware',
+     'django.contrib.messages.middleware.MessageMiddleware',
++    'debug_toolbar.middleware.DebugToolbarMiddleware',
+ )
+ 
+ ROOT_URLCONF = 'test_project.urls'
+
+--- a/settings.py 2010-12-04 22:19:10
++++ b/settings.py 2010-12-04 22:21:35.621787
+@@ -88,6 +88,10 @@
+     'django.contrib.contenttypes',
+     'django.contrib.sessions',
+     'django.contrib.sites',
 +    'django_extensions',
 +    'sorl.thumbnail',
 +    'djcelery',
- )
++    'debug_toolbar',
+     #'django.contrib.messages',
+     # Uncomment the next line to enable the admin:
+     # 'django.contrib.admin',
 
-$ python manage.py install django-extensions | patch
+$ python manage.py install django-extensions | patch -p 1
 
 
 
