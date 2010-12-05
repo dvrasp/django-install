@@ -1,13 +1,13 @@
 Typical use case :
 
-$ python setup.py install # or whatever
+$ pip install -e 'git+git://github.com/dvrasp/django-install.git#egg=django_install' # or whatever
 $ cd ~/some-django-project/
 $ django-install.py django_extensions sorl-thumbnail django-celery django-debug-toolbar
 
 (...) pip install output (...)
 
---- requirements.txt 
-+++ requirements.txt 2010-12-05 05:21:35.595283
+--- a/requirements.txt 
++++ b/requirements.txt 2010-12-05 05:21:35.595283
 @@ -1,0 +1,4 @@
 +django-extensions
 +sorl-thumbnail
