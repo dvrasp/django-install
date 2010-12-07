@@ -1,5 +1,3 @@
-
-
 HOOKS = {
     'APPNAMES':{
         'sorl-thumbnail':['sorl.thumbnail'],
@@ -20,6 +18,9 @@ HOOKS = {
         'django-debug-toolbar':{
             'MIDDLEWARE_CLASSES':['debug_toolbar.middleware.DebugToolbarMiddleware'],
             'INTERNAL_IPS':['127.0.0.1'],
+            },
+        'django-pagination':{
+            'MIDDLEWARE_CLASSES':['pagination.middleware.PaginationMiddleware'],
             },
 	'django-speedtracer':{
 	    'MIDDLEWARE_CLASSES':['speedtracer.middleware.SpeedTracerMiddleware'],
