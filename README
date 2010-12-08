@@ -1,8 +1,8 @@
 Typical use case :
 
-$ pip install -e 'git+git://github.com/dvrasp/django-install.git#egg=django_install' # or whatever
-$ cd ~/some-django-project/
-$ django-install.py django_extensions sorl-thumbnail django-celery django-debug-toolbar
+(virtualenv)$ pip install -e 'git+git://github.com/dvrasp/django-install.git#egg=django_install' # or whatever
+(virtualenv)$ cd ~/some-django-project/
+(virtualenv)$ django-install.py django_extensions sorl-thumbnail django-celery django-debug-toolbar
 
 (...) pip install output (...)
 
@@ -53,7 +53,4 @@ $ django-install.py django_extensions sorl-thumbnail django-celery django-debug-
      # Uncomment the next line to enable the admin:
      # 'django.contrib.admin',
 
-$ python manage.py install django-extensions | patch -p 1
-
-
-
+(virtualenv)$ python manage.py install django-extensions | patch -p 1
