@@ -53,6 +53,6 @@ Typical use case :
      # Uncomment the next line to enable the admin:
      # 'django.contrib.admin',
 
-(virtualenv)$ python manage.py install django-extensions | patch -p 1
+(virtualenv)$ django-install.py django-extensions | patch -p 1
 patching file requirements.txt
 patching file settings.py
